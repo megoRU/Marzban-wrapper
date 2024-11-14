@@ -1,4 +1,4 @@
-package org.marzban.entity.api.request;
+package org.marzban.api.request;
 
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;

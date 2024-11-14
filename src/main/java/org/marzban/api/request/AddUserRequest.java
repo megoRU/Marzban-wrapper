@@ -1,6 +1,6 @@
-package org.marzban.entity.api.request;
+package org.marzban.api.request;
 
-import org.marzban.entity.api.user.UserRequest;
+import org.marzban.api.user.UserRequest;
 
 public class AddUserRequest extends APIRequest {
 

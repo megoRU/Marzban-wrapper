@@ -1,4 +1,4 @@
-package org.marzban.entity.api.admin;
+package org.marzban.api.admin;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;

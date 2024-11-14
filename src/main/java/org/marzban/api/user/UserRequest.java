@@ -1,4 +1,4 @@
-package org.marzban.entity.api.user;
+package org.marzban.api.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

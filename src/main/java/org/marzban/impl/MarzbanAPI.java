@@ -2,12 +2,13 @@ package org.marzban.impl;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.marzban.entity.api.admin.TokenRequest;
-import org.marzban.entity.api.admin.TokenResponse;
-import org.marzban.entity.api.exceptions.UnsuccessfulHttpException;
-import org.marzban.entity.api.user.DeleteUserResponse;
-import org.marzban.entity.api.user.UserRequest;
-import org.marzban.entity.api.user.UserResponse;
+import org.marzban.api.admin.TokenRequest;
+import org.marzban.api.admin.TokenResponse;
+import org.marzban.api.user.UserSearchRequest;
+import org.marzban.api.response.DeleteUserResponse;
+import org.marzban.api.response.UserResponse;
+import org.marzban.exceptions.UnsuccessfulHttpException;
+import org.marzban.api.user.*;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -15,7 +16,7 @@ import java.util.Objects;
 public interface MarzbanAPI {
 
     /**
-     * @param userRequest new client
+     * @param userRequest new user
      * @return {@link UserResponse} userResponse
      */
     UserResponse addUser(@NotNull UserRequest userRequest) throws IOException, UnsuccessfulHttpException;
@@ -25,6 +26,12 @@ public interface MarzbanAPI {
      * @return {@link UserResponse} userResponse
      */
     UserResponse getUser(@NotNull String userName) throws IOException, UnsuccessfulHttpException;
+
+    /**
+     * @param userSearchRequest data for search
+     * @return {@link UsersResponse} users
+     */
+    UsersResponse userSearch(@NotNull UserSearchRequest userSearchRequest) throws IOException, UnsuccessfulHttpException;
 
     /**
      * @param userName user name

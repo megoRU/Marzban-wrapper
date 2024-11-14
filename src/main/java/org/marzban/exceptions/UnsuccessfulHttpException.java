@@ -1,4 +1,4 @@
-package org.marzban.entity.api.exceptions;
+package org.marzban.exceptions;
 
 import lombok.Getter;
 

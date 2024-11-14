@@ -1,4 +1,4 @@
-package org.marzban.entity.api.user;
+package org.marzban.api.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

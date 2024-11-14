@@ -2,16 +2,13 @@ package org.marzban.impl;
 
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
-import org.marzban.entity.api.request.APIRequest;
-import org.marzban.entity.api.request.AddUserRequest;
-import org.marzban.entity.api.request.DeleteUserRequest;
-import org.marzban.entity.api.request.GetUserRequest;
-import org.marzban.entity.api.admin.TokenRequest;
-import org.marzban.entity.api.admin.TokenResponse;
-import org.marzban.entity.api.exceptions.UnsuccessfulHttpException;
-import org.marzban.entity.api.user.DeleteUserResponse;
-import org.marzban.entity.api.user.UserRequest;
-import org.marzban.entity.api.user.UserResponse;
+import org.marzban.api.request.*;
+import org.marzban.api.response.DeleteUserResponse;
+import org.marzban.api.response.UserResponse;
+import org.marzban.api.user.*;
+import org.marzban.api.admin.TokenRequest;
+import org.marzban.api.admin.TokenResponse;
+import org.marzban.exceptions.UnsuccessfulHttpException;
 import org.marzban.utils.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +45,11 @@ public class MarzbanAPIImpl implements MarzbanAPI {
     @Override
     public UserResponse getUser(@NotNull String userName) throws IOException, UnsuccessfulHttpException {
         return parseResponse(UserResponse.class, new GetUserRequest(host, userName));
+    }
+
+    @Override
+    public UsersResponse userSearch(@NotNull UserSearchRequest userSearchRequest) throws IOException, UnsuccessfulHttpException {
+        return parseResponse(UsersResponse.class, new UsersSearchRequest(host, userSearchRequest));
     }
 
     @Override
@@ -108,8 +110,6 @@ public class MarzbanAPIImpl implements MarzbanAPI {
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Authorization", "Bearer " + token);
 
-//        System.out.println(apiRequest.getData().toJson());
-
         if (apiRequest.getRequestMethod() == APIRequest.RequestMethod.GET) {
             requestBuilder = requestBuilder.get();
         } else if (apiRequest.getRequestMethod() == APIRequest.RequestMethod.DELETE) {
@@ -123,6 +123,9 @@ public class MarzbanAPIImpl implements MarzbanAPI {
         }
 
         Request request = requestBuilder.build();
+
+        HttpUrl url = request.url();
+        System.out.println(url.toString());
 
         try (Response response = CLIENT.newCall(request).execute()) {
             String responseBody = Objects.requireNonNull(response.body()).string();
