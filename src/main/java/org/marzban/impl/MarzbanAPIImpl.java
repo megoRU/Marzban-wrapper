@@ -2,23 +2,25 @@ package org.marzban.impl;
 
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
+import org.marzban.api.admin.TokenRequest;
+import org.marzban.api.admin.TokenResponse;
 import org.marzban.api.request.*;
 import org.marzban.api.response.DeleteUserResponse;
 import org.marzban.api.response.UserResponse;
-import org.marzban.api.user.*;
-import org.marzban.api.admin.TokenRequest;
-import org.marzban.api.admin.TokenResponse;
+import org.marzban.api.user.UserRequest;
+import org.marzban.api.user.UserSearchRequest;
+import org.marzban.api.user.UsersResponse;
 import org.marzban.exceptions.UnsuccessfulHttpException;
 import org.marzban.utils.JsonUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MarzbanAPIImpl implements MarzbanAPI {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MarzbanAPIImpl.class);
+    private final static Logger LOGGER = Logger.getLogger(MarzbanAPIImpl.class.getName());
     private static final OkHttpClient CLIENT = new OkHttpClient();
     private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -31,10 +33,6 @@ public class MarzbanAPIImpl implements MarzbanAPI {
         this.devMode = devMode;
         //Устанавливаем сессию
         setSession(tokenRequest);
-    }
-
-    private void logResponse(String body) {
-        if (devMode) System.out.printf("Body: %s%n", body);
     }
 
     @Override
@@ -63,6 +61,27 @@ public class MarzbanAPIImpl implements MarzbanAPI {
     }
 
     private TokenResponse parseResponseToken(@NotNull TokenRequest tokenRequest) throws IOException, UnsuccessfulHttpException {
+        RequestBody formBody = getRequestBody(tokenRequest);
+
+        Request request = new Request.Builder()
+                .url(String.format("%s/%s", host, "api/admin/token"))
+                .post(formBody)
+                .build();
+
+        try (Response response = CLIENT.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new UnsuccessfulHttpException(response.code(), response.message());
+            } else {
+                String body = response.body().string();
+                if (devMode) logResponse(body);
+                TokenResponse tokenResponse = JsonUtil.fromJson(body, TokenResponse.class);
+                token = tokenResponse.getAccessToken();
+                return tokenResponse;
+            }
+        }
+    }
+
+    private static @NotNull RequestBody getRequestBody(@NotNull TokenRequest tokenRequest) {
         FormBody.Builder formBodyBuilder = new FormBody.Builder();
 
         if (tokenRequest.getGrantType() != null) {
@@ -84,24 +103,7 @@ public class MarzbanAPIImpl implements MarzbanAPI {
             formBodyBuilder.add("client_secret", tokenRequest.getClientSecret());
         }
 
-        RequestBody formBody = formBodyBuilder.build();
-
-        Request request = new Request.Builder()
-                .url(String.format("%s/%s", host, "api/admin/token"))
-                .post(formBody)
-                .build();
-
-        try (Response response = CLIENT.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                throw new UnsuccessfulHttpException(response.code(), response.message());
-            } else {
-                String body = response.body().string();
-                if (devMode) logResponse(body);
-                TokenResponse tokenResponse = JsonUtil.fromJson(body, TokenResponse.class);
-                token = tokenResponse.getAccessToken();
-                return tokenResponse;
-            }
-        }
+        return formBodyBuilder.build();
     }
 
     private <T extends APIObject> T parseResponse(Class<T> tClass, @NotNull APIRequest apiRequest) throws IOException, UnsuccessfulHttpException {
@@ -124,9 +126,6 @@ public class MarzbanAPIImpl implements MarzbanAPI {
 
         Request request = requestBuilder.build();
 
-        HttpUrl url = request.url();
-        System.out.println(url.toString());
-
         try (Response response = CLIENT.newCall(request).execute()) {
             String responseBody = Objects.requireNonNull(response.body()).string();
             if (response.isSuccessful()) {
@@ -137,5 +136,9 @@ public class MarzbanAPIImpl implements MarzbanAPI {
                 throw new UnsuccessfulHttpException(response.code(), response.message());
             }
         }
+    }
+
+    private void logResponse(String body) {
+        if (devMode) LOGGER.log(Level.SEVERE, "Body: %s%n", body);
     }
 }

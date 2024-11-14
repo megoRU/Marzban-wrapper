@@ -72,7 +72,8 @@ public interface MarzbanAPI {
 
         /**
          * Example: <a href="https://example.com:8000">https://example.com:8000</a>
-         * Only in this format.
+         * <br>
+         * Only in this format. Without last slash
          */
         @Contract("null -> fail")
         public Builder setHost(String host) {
