@@ -1,5 +1,6 @@
 package org.marzban.api.admin;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,8 +14,10 @@ import org.marzban.impl.APIRequestData;
 public class TokenResponse implements APIObject, APIRequestData {
 
     @SerializedName("access_token")
+    @JsonProperty("access_token")
     private String accessToken;
 
     @SerializedName("token_type")
+    @JsonProperty("token_type")
     private String tokenType;
 }
