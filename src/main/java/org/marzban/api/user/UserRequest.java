@@ -12,32 +12,34 @@ import java.util.List;
 @Builder
 public class UserRequest implements APIRequestData {
 
-    /**
-      if on_hold edit onHoldExpireDuration
-     */
+    @Builder.Default
     private String status = "active";
+
     private String username;
+
+    @Builder.Default
     private String note = "";
+
     private Proxies proxies;
 
+    @Builder.Default
     @JsonProperty("data_limit")
     private Integer dataLimit = 0;
+
+    @Builder.Default
     private Integer expire = 0;
 
-    /**
-      seconds
-     */
+    @Builder.Default
     @JsonProperty("on_hold_expire_duration")
     private Integer onHoldExpireDuration = 0;
 
-    /**
-     * Format: 2023-11-03T20:30:00
-     */
     @JsonProperty("on_hold_timeout")
     private String onHoldTimeout;
 
+    @Builder.Default
     @JsonProperty("data_limit_reset_strategy")
     private String dataLimitResetStrategy = "no_reset";
+
     private Inbounds inbounds;
 
     public UserRequest(String username, Proxies proxies, Inbounds inbounds) {
@@ -50,7 +52,6 @@ public class UserRequest implements APIRequestData {
     @Setter
     @Builder
     public static class Proxies {
-
         private Vless vless;
         private Shadowsocks shadowsocks;
     }
@@ -60,18 +61,19 @@ public class UserRequest implements APIRequestData {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Shadowsocks {
-
         private String password;
         private String method;
     }
 
+    @Builder
     @Getter
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Vless {
-
         private String id;
+
+        @Builder.Default
         private String flow = "xtls-rprx-vision";
     }
 
@@ -79,7 +81,6 @@ public class UserRequest implements APIRequestData {
     @Setter
     @Builder
     public static class Inbounds {
-
         private List<String> vless;
         private List<String> shadowsocks;
         private List<String> vmess;
@@ -91,15 +92,11 @@ public class UserRequest implements APIRequestData {
 
         VLESS_TCP_REALITY("VLESS TCP REALITY"),
         VLESS_TCP_TLS("VLESS TCP TLS"),
-
         SHADOWSOCKS_TCP("SHADOWSOCKS TCP"),
-
         TROJAN_TCP_XTLS("TROJAN TCP XTLS"),
         TROJAN_TCP_TLS("TROJAN TCP TLS"),
-
         VMESS_TCP("VMESS TCP"),
         VMESS_TCP_TLS("VMESS TCP TLS"),
-
         NONE("");
 
         private final String value;
@@ -110,10 +107,8 @@ public class UserRequest implements APIRequestData {
 
         public static Protocol find(String value) {
             if (value == null || value.isEmpty()) return Protocol.NONE;
-            Protocol[] values = Protocol.values();
-            for (Protocol version : values) {
-                String localValue = version.getValue();
-                if (localValue.equals(value)) {
+            for (Protocol version : values()) {
+                if (version.value.equals(value)) {
                     return version;
                 }
             }

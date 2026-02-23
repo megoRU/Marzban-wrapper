@@ -17,6 +17,7 @@ public class UserSearchRequest implements APIRequestData {
     private String search;
     private List<String> admin;
     private Status status;
+    @Builder.Default
     private String sort = "-created_at";
 
     @Getter
