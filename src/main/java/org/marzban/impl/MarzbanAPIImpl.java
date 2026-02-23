@@ -41,6 +41,11 @@ public class MarzbanAPIImpl implements MarzbanAPI {
     }
 
     @Override
+    public UserResponse modifyUser(@NotNull UserRequest userRequest) throws IOException, UnsuccessfulHttpException {
+        return parseResponse(UserResponse.class, new ModifyUserRequest(host, userRequest));
+    }
+
+    @Override
     public UserResponse getUser(@NotNull String userName) throws IOException, UnsuccessfulHttpException {
         return parseResponse(UserResponse.class, new GetUserRequest(host, userName));
     }
@@ -116,6 +121,12 @@ public class MarzbanAPIImpl implements MarzbanAPI {
             requestBuilder = requestBuilder.get();
         } else if (apiRequest.getRequestMethod() == APIRequest.RequestMethod.DELETE) {
             requestBuilder = requestBuilder.delete();
+        } else if (apiRequest.getRequestMethod() == APIRequest.RequestMethod.PUT) {
+            if (apiRequest.getData() != null) {
+                requestBuilder.post(RequestBody.create(apiRequest.getData().toJson(), MEDIA_TYPE_JSON));
+            } else {
+                requestBuilder.post(RequestBody.create("{}", MEDIA_TYPE_JSON));
+            }
         } else if (apiRequest.getRequestMethod() == APIRequest.RequestMethod.POST) {
             if (apiRequest.getData() != null) {
                 requestBuilder.post(RequestBody.create(apiRequest.getData().toJson(), MEDIA_TYPE_JSON));

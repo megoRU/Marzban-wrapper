@@ -22,6 +22,12 @@ public interface MarzbanAPI {
     UserResponse addUser(@NotNull UserRequest userRequest) throws IOException, UnsuccessfulHttpException;
 
     /**
+     * @param userRequest modify user
+     * @return {@link UserResponse} userResponse
+     */
+    UserResponse modifyUser(@NotNull UserRequest userRequest) throws IOException, UnsuccessfulHttpException;
+
+    /**
      * @param userName user name
      * @return {@link UserResponse} userResponse
      */
