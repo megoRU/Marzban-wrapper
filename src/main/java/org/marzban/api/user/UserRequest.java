@@ -21,14 +21,20 @@ public class UserRequest implements APIRequestData {
     private Proxies proxies;
 
     @JsonProperty("data_limit")
-    private long dataLimit = 0;
-    private Long expire = null;
+    private Integer dataLimit = 0;
+    private Integer expire = 0;
 
     /**
       seconds
      */
     @JsonProperty("on_hold_expire_duration")
-    private Long onHoldExpireDuration = null;
+    private Integer onHoldExpireDuration = 0;
+
+    /**
+     * Format: 2023-11-03T20:30:00
+     */
+    @JsonProperty("on_hold_timeout")
+    private String onHoldTimeout;
 
     @JsonProperty("data_limit_reset_strategy")
     private String dataLimitResetStrategy = "no_reset";
