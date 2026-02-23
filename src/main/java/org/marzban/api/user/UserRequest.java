@@ -26,10 +26,10 @@ public class UserRequest implements APIRequestData {
     @Builder.Default
     @JsonProperty("data_limit")
     @SerializedName("data_limit")
-    private Integer dataLimit = 0;
+    private Long dataLimit = 0L;
 
     @Builder.Default
-    private Integer expire = 0;
+    private Long expire = 0L;
 
     @Builder.Default
     @JsonProperty("on_hold_expire_duration")

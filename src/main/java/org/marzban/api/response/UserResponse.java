@@ -18,7 +18,7 @@ public class UserResponse implements APIObject {
 
     @SerializedName("data_limit")
     @JsonProperty("data_limit")
-    private String dataLimit;
+    private Long dataLimit;
 
     @SerializedName("data_limit_reset_strategy")
     @JsonProperty("data_limit_reset_strategy")
