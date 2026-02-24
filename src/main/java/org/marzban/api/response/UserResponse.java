@@ -3,6 +3,7 @@ package org.marzban.api.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 import lombok.*;
+import org.marzban.api.user.UserCommon;
 import org.marzban.impl.APIObject;
 
 import java.time.LocalDateTime;
@@ -11,9 +12,10 @@ import java.util.List;
 @Setter
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserResponse implements APIObject {
 
-    private Proxies proxies;
+    private UserCommon.Proxies proxies;
     private String expire;
 
     @SerializedName("data_limit")
@@ -24,7 +26,7 @@ public class UserResponse implements APIObject {
     @JsonProperty("data_limit_reset_strategy")
     private String dataLimitResetStrategy;
 
-    private Inbounds inbounds;
+    private UserCommon.Inbounds inbounds;
     private String note;
 
     @SerializedName("sub_updated_at")
@@ -77,25 +79,6 @@ public class UserResponse implements APIObject {
     private ExcludedInbounds excludedInbounds;
 
     private Admin admin;
-
-    @Data
-    @NoArgsConstructor
-    public static class Proxies {
-        private Vless vless;
-    }
-
-    @Data
-    @NoArgsConstructor
-    public static class Vless {
-        private String id;
-        private String flow;
-    }
-
-    @Data
-    @NoArgsConstructor
-    public static class Inbounds {
-        private List<String> vless;
-    }
 
     @Data
     @NoArgsConstructor

@@ -27,7 +27,7 @@ https://jitpack.io/#megoRU/Marzban-wrapper
 ### Delete User
 ```java
 public class Main {
-    public static void main(String[] args) throws IOException, UnsuccessfulHttpException {
+    static void main(String[] args) throws IOException, UnsuccessfulHttpException {
         TokenRequest tokenRequest = new TokenRequest("login", "password");
 
         MarzbanAPI marzbanAPI = new MarzbanAPIImpl.Builder()
@@ -44,7 +44,7 @@ public class Main {
 ### Add User
 ```java
 public class Main {
-    public static void main(String[] args) throws IOException, UnsuccessfulHttpException {
+     static void main(String[] args) throws IOException, UnsuccessfulHttpException {
         TokenRequest tokenRequest = new TokenRequest("login", "password");
 
         MarzbanAPI marzbanAPI = new MarzbanAPIImpl.Builder()
@@ -53,9 +53,9 @@ public class Main {
                 .build();
 
         List<String> vlessTcpRealityStatus = List.of(UserRequest.Protocol.VLESS_TCP_REALITY.getValue());
-        UserRequest.Vless vless = new UserRequest.Vless();
-        UserRequest.Proxies proxies = UserRequest.Proxies.builder().vless(vless).build();
-        UserRequest.Inbounds inbounds = UserRequest.Inbounds.builder().vless(vlessTcpRealityStatus).build();
+        UserCommon.Vless vless = new UserCommon.Vless();
+        UserCommon.Proxies proxies = UserCommon.Proxies.builder().vless(vless).build();
+        UserCommon.Inbounds inbounds = UserCommon.Inbounds.builder().vless(vlessTcpRealityStatus).build();
 
         UserRequest userRequest = new UserRequest("user", proxies, inbounds);
 
@@ -68,7 +68,7 @@ public class Main {
 ### Get User
 ```java
 public class Main {
-    public static void main(String[] args) throws IOException, UnsuccessfulHttpException {
+    static void main(String[] args) throws IOException, UnsuccessfulHttpException {
         TokenRequest tokenRequest = new TokenRequest("login", "password");
 
         MarzbanAPI marzbanAPI = new MarzbanAPIImpl.Builder()

@@ -123,9 +123,9 @@ public class MarzbanAPIImpl implements MarzbanAPI {
             requestBuilder = requestBuilder.delete();
         } else if (apiRequest.getRequestMethod() == APIRequest.RequestMethod.PUT) {
             if (apiRequest.getData() != null) {
-                requestBuilder.post(RequestBody.create(apiRequest.getData().toJson(), MEDIA_TYPE_JSON));
+                requestBuilder.put(RequestBody.create(apiRequest.getData().toJson(), MEDIA_TYPE_JSON));
             } else {
-                requestBuilder.post(RequestBody.create("{}", MEDIA_TYPE_JSON));
+                requestBuilder.put(RequestBody.create("{}", MEDIA_TYPE_JSON));
             }
         } else if (apiRequest.getRequestMethod() == APIRequest.RequestMethod.POST) {
             if (apiRequest.getData() != null) {

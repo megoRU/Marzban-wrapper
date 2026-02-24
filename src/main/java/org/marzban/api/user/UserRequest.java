@@ -5,11 +5,10 @@ import com.google.gson.annotations.SerializedName;
 import lombok.*;
 import org.marzban.impl.APIRequestData;
 
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class UserRequest implements APIRequestData {
 
@@ -21,7 +20,8 @@ public class UserRequest implements APIRequestData {
     @Builder.Default
     private String note = "";
 
-    private Proxies proxies;
+    private UserCommon.Proxies proxies;
+    private UserCommon.Inbounds inbounds;
 
     @Builder.Default
     @JsonProperty("data_limit")
@@ -45,51 +45,10 @@ public class UserRequest implements APIRequestData {
     @SerializedName("data_limit_reset_strategy")
     private String dataLimitResetStrategy = "no_reset";
 
-    private Inbounds inbounds;
-
-    public UserRequest(String username, Proxies proxies, Inbounds inbounds) {
+    public UserRequest(String username, UserCommon.Proxies proxies, UserCommon.Inbounds inbounds) {
         this.username = username;
         this.proxies = proxies;
         this.inbounds = inbounds;
-    }
-
-    @Getter
-    @Setter
-    @Builder
-    public static class Proxies {
-        private Vless vless;
-        private Shadowsocks shadowsocks;
-    }
-
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class Shadowsocks {
-        private String password;
-        private String method;
-    }
-
-    @Builder
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class Vless {
-        private String id;
-
-        @Builder.Default
-        private String flow = "xtls-rprx-vision";
-    }
-
-    @Getter
-    @Setter
-    @Builder
-    public static class Inbounds {
-        private List<String> vless;
-        private List<String> shadowsocks;
-        private List<String> vmess;
-        private List<String> trojan;
     }
 
     @Getter
@@ -113,9 +72,7 @@ public class UserRequest implements APIRequestData {
         public static Protocol find(String value) {
             if (value == null || value.isEmpty()) return Protocol.NONE;
             for (Protocol version : values()) {
-                if (version.value.equals(value)) {
-                    return version;
-                }
+                if (version.value.equals(value)) return version;
             }
             return null;
         }
