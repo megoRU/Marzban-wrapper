@@ -1,6 +1,6 @@
 <h2 align="center" style="font-size: 1.2rem;">
-  <a href="README.md">『 EN</a> •
-  <a href="README_RU.md">RU 』</a>
+  『 <a href="README.md">EN</a> •
+  <a href="README_RU.md">RU</a> 』
 </h2>
 
 # Marzban-wrapper
