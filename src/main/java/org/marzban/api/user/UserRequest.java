@@ -53,11 +53,9 @@ public class UserRequest implements APIRequestData {
 
     @Getter
     public enum Protocol {
-
         VLESS_TCP_REALITY("VLESS TCP REALITY"),
         VLESS_TCP_TLS("VLESS TCP TLS"),
         SHADOWSOCKS_TCP("Shadowsocks TCP"),
-        TROJAN_TCP_XTLS("TROJAN TCP XTLS"),
         TROJAN_TCP_TLS("TROJAN TCP TLS"),
         VMESS_TCP("VMESS TCP"),
         VMESS_TCP_TLS("VMESS TCP TLS"),
@@ -67,14 +65,6 @@ public class UserRequest implements APIRequestData {
 
         Protocol(String value) {
             this.value = value;
-        }
-
-        public static Protocol find(String value) {
-            if (value == null || value.isEmpty()) return Protocol.NONE;
-            for (Protocol version : values()) {
-                if (version.value.equals(value)) return version;
-            }
-            return null;
         }
     }
 }
