@@ -20,9 +20,9 @@ https://jitpack.io/#megoRU/Marzban-wrapper
 </repositories>
 
 <dependency>
-<groupId>com.github.megoRU</groupId>
-<artifactId>Marzban-wrapper</artifactId>
-<version>1.0.9</version>
+   <groupId>com.github.megoRU</groupId>
+   <artifactId>Marzban-wrapper</artifactId>
+   <version>1.0.9</version>
 </dependency>
 ```
 
