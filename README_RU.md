@@ -5,7 +5,7 @@
 
 # Marzban-wrapper
 
-An API wrapper for [Marzban](https://github.com/Gozargah/Marzban) written in Java by @megoRU
+Оболочка API для [Marzban](https://github.com/Gozargah/Marzban) написанный на Java автором @megoRU
 
 ### Maven
 
@@ -26,9 +26,9 @@ https://jitpack.io/#megoRU/Marzban-wrapper
 </dependency>
 ```
 
-## Examples
+## Примеры
 
-### Delete User
+### Удаление пользователя
 ```java
 public class Main {
     static void main(String[] args) throws IOException, UnsuccessfulHttpException {
@@ -45,10 +45,10 @@ public class Main {
 }
 ```
 
-### Add User
+### Добавление пользователя
 ```java
 public class Main {
-    static void main(String[] args) throws IOException, UnsuccessfulHttpException {
+     static void main(String[] args) throws IOException, UnsuccessfulHttpException {
         TokenRequest tokenRequest = new TokenRequest("login", "password");
 
         MarzbanAPI marzbanAPI = new MarzbanAPIImpl.Builder()
@@ -69,36 +69,36 @@ public class Main {
 }
 ```
 
-### Modify User
+### Редактирование пользователя
 ```java
 public class Main {
-    static void main(String[] args) throws IOException, UnsuccessfulHttpException {
-        TokenRequest tokenRequest = new TokenRequest("login", "password");
+     static void main(String[] args) throws IOException, UnsuccessfulHttpException {
+         TokenRequest tokenRequest = new TokenRequest("login", "password");
 
-        MarzbanAPI marzbanAPI = new MarzbanAPIImpl.Builder()
-                .setTokenRequest(tokenRequest)
-                .setHost("https://example.com:8000")
-                .build();
+         MarzbanAPI marzbanAPI = new MarzbanAPIImpl.Builder()
+                 .setTokenRequest(tokenRequest)
+                 .setHost("https://example.com:8000")
+                 .build();
 
-        List<String> vlessTcpRealityStatus = List.of(UserRequest.Protocol.VLESS_TCP_REALITY.getValue());
-        UserCommon.Vless vless = new UserCommon.Vless();
-        UserCommon.Proxies proxies = UserCommon.Proxies.builder().vless(vless).build();
-        UserCommon.Inbounds inbounds = UserCommon.Inbounds.builder().vless(vlessTcpRealityStatus).build();
+         List<String> vlessTcpRealityStatus = List.of(UserRequest.Protocol.VLESS_TCP_REALITY.getValue());
+         UserCommon.Vless vless = new UserCommon.Vless();
+         UserCommon.Proxies proxies = UserCommon.Proxies.builder().vless(vless).build();
+         UserCommon.Inbounds inbounds = UserCommon.Inbounds.builder().vless(vlessTcpRealityStatus).build();
 
-        UserRequest modifiedUser = new UserRequest("user", proxies, inbounds);
+         UserRequest modifiedUser = new UserRequest("user", proxies, inbounds);
 
-        String status = UserSearchRequest.Status.DISABLED.getValue();
+         String status = UserSearchRequest.Status.DISABLED.getValue();
 
-        modifiedUser.setStatus(status);
+         modifiedUser.setStatus(status);
 
-        UserResponse user = marzbanAPI.modifyUser(modifiedUser);
+         UserResponse user = marzbanAPI.modifyUser(modifiedUser);
 
-        System.out.println(user.getStatus()); //String [status]
+         System.out.println(user.getStatus()); //String [status]
     }
 }
 ```
 
-### Get User
+### Получение пользователя
 ```java
 public class Main {
     static void main(String[] args) throws IOException, UnsuccessfulHttpException {

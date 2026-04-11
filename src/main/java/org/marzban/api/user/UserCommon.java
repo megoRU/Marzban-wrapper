@@ -14,6 +14,7 @@ public final class UserCommon {
     @AllArgsConstructor
     public static class Proxies {
         private Vless vless;
+        private Trojan trojan;
         private Shadowsocks shadowsocks;
     }
 
@@ -27,6 +28,15 @@ public final class UserCommon {
 
         @Builder.Default
         private String flow = "xtls-rprx-vision";
+    }
+
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Trojan {
+        private String password;
     }
 
     @Getter
